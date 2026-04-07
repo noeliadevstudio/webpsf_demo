@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-
+const indexRouter = require('./routes/index');
 
 // Configuración del motor de plantillas EJS
 app.set('view engine', 'ejs');

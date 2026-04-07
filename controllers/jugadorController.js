@@ -1,8 +1,8 @@
-const Jugador = require('../models/Jugador');
+const Jugador = require('../dao/Jugadores');
 
 exports.getPlantilla = async (req, res) => {
     try {
-        const jugadores = await Jugadorr.getAllWithStats();
+        const jugadores = await Jugador.getAllWithStats();
         res.render('players', { jugadores });
     } catch (error) {
         console.error("Error en el controlador de jugadores:", error);
