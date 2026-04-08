@@ -1,11 +1,13 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const jugadorController = require('../controllers/jugadorController');
+import jugadorController from '../controllers/jugadorController.js';
 
-// Definimos la ruta de la plantilla
+// la ruta de la plantilla
 router.get('/plantilla', jugadorController.getPlantilla);
 
-// Puedes añadir aquí la del home
-router.get('/', (req, res) => res.render('index', { title: 'Inicio - PSF' }));
+// Ruta de Home
+router.get('/', (req, res) => {
+    res.render('index', { title: 'Inicio - PSF' });
+});
 
-module.exports = router;
+export default router;

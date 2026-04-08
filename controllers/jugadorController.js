@@ -1,6 +1,7 @@
-const Jugador = require('../dao/Jugadores');
 
-exports.getPlantilla = async (req, res) => {
+import Jugador from '../dao/Jugadores.js';
+
+export const getPlantilla = async (req, res) => {
     try {
         const jugadores = await Jugador.getAllWithStats();
         res.render('players', { jugadores });
@@ -9,3 +10,5 @@ exports.getPlantilla = async (req, res) => {
         res.status(500).send("Error al cargar la plantilla");
     }
 };
+const jugadorController = { getPlantilla };
+export default jugadorController;
