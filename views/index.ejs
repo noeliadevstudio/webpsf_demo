@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title><%= title %></title> <!--Se recogen las variables del index.js -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#">PSF Equipo</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link active" href="/">Inicio</a>
+                <a class="nav-link" href="/plantilla">Plantilla</a>
+            </div>
         </div>
     </nav>
 
@@ -18,6 +22,18 @@
             <div class="container-fluid py-5">
                 <h1 class="display-5 fw-bold"> Web del PSF</h1>
                 <p class="col-md-8 fs-4">Información deportiva, ETC.</p>
+                <a href="/plantilla" class="btn btn-primary btn-lg">Ver Plantilla</a>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h2>Últimas Noticias</h2>
+                <p>Aquí irían las últimas noticias del equipo...</p>
+            </div>
+            <div class="col-md-6">
+                <h2>Próximos Partidos</h2>
+                <p>Calendario de próximos encuentros...</p>
             </div>
         </div>
     </div>

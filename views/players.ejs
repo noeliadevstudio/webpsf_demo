@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantilla - PSF</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">PSF Equipo</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Inicio</a>
+                <a class="nav-link active" href="/plantilla">Plantilla</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Plantilla del Equipo</h1>
+        <div class="row">
+            <% jugadores.forEach(jugador => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <% if (jugador.URL_foto) { %>
+                            <img src="<%= jugador.URL_foto %>" class="card-img-top" alt="Foto de <%= jugador.nombre %>" />
+                        <% } %>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= jugador.nombre %> <%= jugador.apellido || '' %></h5>
+                            <% if (jugador.mote) { %>
+                                <p class="card-text"><strong>Mote:</strong> <%= jugador.mote %></p>
+                            <% } %>
+                            <% if (jugador.dorsal != null) { %>
+                                <p class="card-text"><strong>Dorsal:</strong> <%= jugador.dorsal %></p>
+                            <% } %>
+                            <p class="card-text">Posición: <%= jugador.posicion || 'No definida' %></p>
+                            <% if (jugador.historico) { %>
+                                <p class="card-text"><strong>Histórico:</strong> <%= jugador.historico %></p>
+                            <% } %>
+                            <% if (jugador.cant_estrellas != null) { %>
+                                <p class="card-text"><strong>Estrellas:</strong> <%= jugador.cant_estrellas %> ⭐</p>
+                            <% } %>
+                            <p class="card-text">Partidos: <%= jugador.partidos || 0 %></p>
+                            <p class="card-text">Goles: <%= jugador.goles || 0 %></p>
+                            <p class="card-text">Asistencias: <%= jugador.asistencias || 0 %></p>
+                            <p class="card-text">Tarjetas Amarillas: <%= jugador.tarjetas_amarillas || 0 %></p>
+                            <p class="card-text">Tarjetas Rojas: <%= jugador.tarjetas_rojas || 0 %></p>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
