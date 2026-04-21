@@ -3,9 +3,15 @@ import express from 'express';
 const router = express.Router();
 // Importar el controlador de jugadores para manejar la ruta de la plantilla
 import jugadorController from '../controllers/jugadorController.js';
+// Importar el controlador de autenticación para manejar las rutas de login, registro y logout
+import authController from '../controllers/authController.js';
 
-// la ruta de la plantilla
 router.get('/plantilla', jugadorController.getPlantilla);
+router.get('/login', authController.showLogin);
+router.post('/login', authController.login);
+router.get('/register', authController.showRegister);
+router.post('/register', authController.register);
+router.get('/logout', authController.logout);
 
 // Ruta de Home
 router.get('/', (req, res) => {

@@ -4,7 +4,7 @@ import Jugador from '../dao/Jugadores.js';
 // Función para obtener la plantilla completa con estadísticas y renderizar la vista correspondiente
 export const getPlantilla = async (req, res) => {
     try {  
-        const jugadores = await Jugador.getAllWithStats();
+        const jugadores = await Jugador.getAllConEstadisticas();
         res.render('players', { jugadores });
     } catch (error) {
         console.error("Error en el controlador de jugadores:", error);

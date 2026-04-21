@@ -10,7 +10,7 @@ const Jugador = {
         return rows;
     },
      // Función para obtener todos los jugadores junto con sus estadísticas
-    getAllWithStats: async () => {
+    getAllConEstadisticas: async () => {
         const [rows] = await db.query(`
             SELECT j.*, e.partidos, e.goles, e.asistencias, e.tarjetas_amarillas, e.tarjetas_rojas
             FROM jugadores j
