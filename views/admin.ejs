@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - PSF</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+     <script defer src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">PSF Equipo</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Inicio</a>
+                <a class="nav-link" href="/plantilla">Plantilla</a>
+                <a class="nav-link active" href="/admin">Panel Admin</a>
+                <span class="nav-link text-light">¡Hola, <%= user.nombre %>!</span>
+                <a class="nav-link" href="/logout">Cerrar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <% if (!user || user.rol !== 'admin') { %>
+            <div class="alert alert-danger">
+                <h4>Acceso denegado</h4>
+                <p>No tienes permisos para acceder a esta página. Solo los administradores pueden gestionar el contenido.</p>
+                <a href="/" class="btn btn-primary">Volver al inicio</a>
+            </div>
+        <% } else { %>
+        <h1 class="mb-4">Panel de Gestión</h1>
+
+        <% if (message) { %>
+            <div class="alert alert-success"><%= message %></div>
+        <% } %>
+        <% if (error) { %>
+            <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+
+        <div class="row gy-4">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Agregar nuevo jugador</h4>
+                        <form action="/admin/jugadores" method="POST">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" name="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Apellido</label>
+                                <input type="text" class="form-control" name="apellido">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mote</label>
+                                <input type="text" class="form-control" name="mote">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Dorsal</label>
+                                <input type="number" class="form-control" name="dorsal" min="1">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Posición</label>
+                                <input type="text" class="form-control" name="posicion">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">URL de la foto</label>
+                                <input type="url" class="form-control" name="URL_foto">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Histórico</label>
+                                <textarea class="form-control" name="historico" rows="2"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Estrellas</label>
+                                <input type="number" class="form-control" name="cant_estrellas" min="0" max="5">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Agregar jugador</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Actualizar estadísticas</h4>
+                        <form action="/admin/estadisticas" method="POST">
+                            <div class="mb-3">
+                                <label class="form-label">Jugador</label>
+                                <select class="form-select" name="jugador_id" required>
+                                    <option value="">Selecciona un jugador</option>
+                                    <% jugadores.forEach(jugador => { %>
+                                        <option value="<%= jugador.id %>"><%= jugador.nombre %> <%= jugador.apellido || '' %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Partidos</label>
+                                    <input type="number" class="form-control" name="partidos" min="0">
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Goles</label>
+                                    <input type="number" class="form-control" name="goles" min="0">
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Asistencias</label>
+                                    <input type="number" class="form-control" name="asistencias" min="0">
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Tarjetas amarillas</label>
+                                    <input type="number" class="form-control" name="tarjetas_amarillas" min="0">
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Tarjetas rojas</label>
+                                    <input type="number" class="form-control" name="tarjetas_rojas" min="0">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Guardar estadísticas</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Agenda de partidos (preparado para futuro)</h4>
+                        <p class="text-muted">Esta sección está preparada para crear fechas de partidos y resultados cuando la base de datos cuente con la tabla correspondiente.</p>
+                        <form action="/admin/partidos" method="POST">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Fecha del partido</label>
+                                    <input type="date" class="form-control" name="fecha">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Rival</label>
+                                    <input type="text" class="form-control" name="rival">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Resultado</label>
+                                    <input type="text" class="form-control" name="resultado" placeholder="Ej. 2-1">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-secondary">Guardar partido (pendiente)</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+   
+</body>
+</html>

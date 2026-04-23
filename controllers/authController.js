@@ -4,9 +4,9 @@ import Usuario from '../dao/Usuarios.js';
 // Controlador para manejar la autenticación de usuarios: login, registro y logout
 export const showLogin = (req, res) => {
     if (req.session.user) {
-        return res.redirect('/');
+        return res.redirect('/'); //redirigir inicio
     }
-    res.render('login', { title: 'Iniciar Sesión', error: null });
+    res.render('login', { title: 'Iniciar Sesión', error: null }); 
 };
 // Mostrar formulario de registro
 export const showRegister = (req, res) => {
@@ -16,7 +16,7 @@ export const showRegister = (req, res) => {
     }
     res.render('register', { title: 'Registro', error: null });
 };
-
+// manejo registro
 export const register = async (req, res) => {
     try {
         const { username, nombre, password, passwordConfirm } = req.body;
@@ -34,7 +34,7 @@ export const register = async (req, res) => {
         if (existUser) {
             return res.render('register', { title: 'Registro', error: 'Ya existe un usuario con ese nombre de usuario.' });
         }
-
+        // Almacenar la contraseña hasehada 
         const hashedPassword = await bcrypt.hash(password, 10);
         let usuarioId;
         try {
@@ -45,7 +45,7 @@ export const register = async (req, res) => {
             }
             throw dbError;
         }
-
+        // Inicio de sesion tras registro:
         req.session.user = { id: usuarioId, username: usernameSinespacios, nombre, rol: 'user' };
         res.redirect('/');
     } catch (error) {
@@ -53,7 +53,7 @@ export const register = async (req, res) => {
         res.status(500).send('Error al registrar el usuario.');
     }
 };
-
+// Manejo login:
 export const login = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -62,7 +62,7 @@ export const login = async (req, res) => {
         if (!usernameSinespacios || !password) {
             return res.render('login', { title: 'Iniciar Sesión', error: 'Completa ambos campos.' });
         }
-
+        //Consulta si existe usuario
         const usuario = await Usuario.getByUsername(usernameSinespacios);
         if (!usuario) {
             return res.render('login', { title: 'Iniciar Sesión', error: 'Usuario o contraseña incorrectos.' });
@@ -72,7 +72,7 @@ export const login = async (req, res) => {
         if (!passwordhash) {
             return res.render('login', { title: 'Iniciar Sesión', error: 'Usuario o contraseña incorrectos.' });
         }
-
+       // Almacen en sesion: 
         req.session.user = { id: usuario.id, username: usuario.username, nombre: usuario.nombre, rol: usuario.rol };
         // Redirigir al usuario a la página de inicio después de iniciar sesión
         res.redirect('/');
@@ -83,6 +83,7 @@ export const login = async (req, res) => {
 };
 //Cerrar sesion usuario
 export const logout = (req, res) => {
+    //Destruir sesion:
     req.session.destroy(err => {
         if (err) {
             console.error('Error cerrando sesión:', err);

@@ -37,4 +37,24 @@
         });
         sessionStorage.setItem(storageKey, JSON.stringify(values));
     });
+
+    // Función para mostrar/ocultar contraseña
+    const passwordInputs = form.querySelectorAll('input[type="password"]'); //esto cambiar por el elemntby
+    passwordInputs.forEach(input => {
+        const toggleButton = document.createElement('button');
+        toggleButton.type = 'button';
+        toggleButton.className = 'btn btn-outline-secondary btn-sm ms-2';
+        toggleButton.innerHTML = '👁️'; // Icono de ojo
+        toggleButton.title = 'Mostrar/ocultar contraseña';
+
+        toggleButton.addEventListener('click', () => {
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            toggleButton.innerHTML = isPassword ? '🙈' : '👁️'; // Cambiar icono
+            toggleButton.title = isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña';
+        });
+
+        // Insertar el botón después del input
+        input.parentNode.insertBefore(toggleButton, input.nextSibling);
+    });
 })();
