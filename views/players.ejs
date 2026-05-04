@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plantilla - PSF</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-       <script defer src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script defer src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script defer src="/js/gestionFormularios.js"></script>
+    <script defer src="/js/votar.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -57,6 +59,44 @@
                             <p class="card-text">Asistencias: <%= jugador.asistencias || 0 %></p>
                             <p class="card-text">Tarjetas Amarillas: <%= jugador.tarjetas_amarillas || 0 %></p>
                             <p class="card-text">Tarjetas Rojas: <%= jugador.tarjetas_rojas || 0 %></p>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal<%= jugador.id %>">Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal<%= jugador.id %>" tabindex="-1" aria-labelledby="modalLabel<%= jugador.id %>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel<%= jugador.id %>"><%= jugador.nombre %> <%= jugador.apellido || '' %></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <% if (jugador.URL_foto) { %>
+                                    <img src="<%= jugador.URL_foto %>" class="img-fluid mb-3" alt="Foto de <%= jugador.nombre %>" />
+                                <% } %>
+                                <% if (jugador.mote) { %>
+                                    <p><strong>Mote:</strong> <%= jugador.mote %></p>
+                                <% } %>
+                                <% if (jugador.dorsal != null) { %>
+                                    <p><strong>Dorsal:</strong> <%= jugador.dorsal %></p>
+                                <% } %>
+                                <p><strong>Posición:</strong> <%= jugador.posicion || 'No definida' %></p>
+                                <% if (jugador.historico) { %>
+                                    <p><strong>Histórico:</strong> <%= jugador.historico %></p>
+                                <% } %>
+                                <p><strong>Partidos:</strong> <%= jugador.partidos || 0 %></p>
+                                <p><strong>Goles:</strong> <%= jugador.goles || 0 %></p>
+                                <p><strong>Asistencias:</strong> <%= jugador.asistencias || 0 %></p>
+                                <p><strong>Tarjetas Amarillas:</strong> <%= jugador.tarjetas_amarillas || 0 %></p>
+                                <p><strong>Tarjetas Rojas:</strong> <%= jugador.tarjetas_rojas || 0 %></p>
+                                <% if (user) { %>
+                                    <button type="button" class="btn btn-warning votar-btn" data-jugador-id="<%= jugador.id %>">Votar ⭐</button>
+                                <% } else { %>
+                                    <p>Inicia sesión para votar.</p>
+                                <% } %>
+                            </div>
                         </div>
                     </div>
                 </div>

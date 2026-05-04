@@ -39,12 +39,19 @@
 
         <div class="row mt-5">
             <div class="col-md-6">
-                <h2>Últimas Noticias</h2>
-                <p>Aquí irían las últimas noticias del equipo...</p>
+                <h2>Ranking de Estrellas</h2>
+                <ul class="list-group">
+                    <% ranking.forEach((jugador, index) => { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <%= index + 1 %>. <%= jugador.nombre %> <%= jugador.apellido || '' %>
+                            <span class="badge bg-primary rounded-pill"><%= jugador.cant_estrellas %> ⭐</span>
+                        </li>
+                    <% }); %>
+                </ul>
             </div>
             <div class="col-md-6">
-                <h2>Próximos Partidos</h2>
-                <p>Calendario de próximos encuentros...</p>
+                <h2>Últimas Noticias</h2>
+                <p>Aquí irían las últimas noticias del equipo...</p>
             </div>
         </div>
     </div>

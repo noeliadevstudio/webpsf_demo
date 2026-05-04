@@ -20,7 +20,7 @@ export const getAdminPanel = async (req, res) => {
 
 export const addJugador = async (req, res) => {
     try {
-        const { nombre, apellido, mote, dorsal, posicion, URL_foto, historico, cant_estrellas } = req.body;
+        const { nombre, apellido, mote, dorsal, posicion, URL_foto, historico } = req.body;
 
         if (!nombre || nombre.trim() === '') {
             return await renderAdminPanel(res, { error: 'El nombre del jugador es obligatorio.' });
@@ -33,8 +33,7 @@ export const addJugador = async (req, res) => {
             dorsal: dorsal ? Number(dorsal) : null,
             posicion: posicion?.trim() || null,
             URL_foto: URL_foto?.trim() || null,
-            historico: historico?.trim() || null,
-            cant_estrellas: cant_estrellas ? Number(cant_estrellas) : null
+            historico: historico?.trim() || null
         });
 
         await renderAdminPanel(res, { message: 'Jugador agregado correctamente.' });
