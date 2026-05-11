@@ -44,13 +44,13 @@
         const toggleButton = document.createElement('button');
         toggleButton.type = 'button';
         toggleButton.className = 'btn btn-outline-secondary btn-sm ms-2';
-        toggleButton.innerHTML = '👁️'; // Icono de ojo
+        toggleButton.innerHTML = 'Ver'; 
         toggleButton.title = 'Mostrar/ocultar contraseña';
 
         toggleButton.addEventListener('click', () => {
             const isPassword = input.type === 'password';
             input.type = isPassword ? 'text' : 'password';
-            toggleButton.innerHTML = isPassword ? '🙈' : '👁️'; // Cambiar icono
+            toggleButton.innerHTML = isPassword ? 'Ocultar' : 'Ver';
             toggleButton.title = isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña';
         });
 

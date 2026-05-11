@@ -9,7 +9,7 @@ const production = process.env.NODE_ENV === "production";
 
 const pool = mysql.createPool({
     uri: process.env.DATABASE_URL,
- ...(production && {
+ ...(production && {//Control para activar ssl solo en despliegue (enlace encriptado)
         ssl: {
             rejectUnauthorized: false
         }

@@ -1,5 +1,6 @@
 import Jugador from '../dao/Jugadores.js';
 
+// Función auxiliar para renderizar el panel de administración con jugadores y mensajes
 const renderAdminPanel = async (res, options = {}) => {
     const jugadores = await Jugador.getAllConEstadisticas();
     res.render('admin', {
@@ -8,7 +9,7 @@ const renderAdminPanel = async (res, options = {}) => {
         error: options.error || null
     });
 };
-
+//Panel admin: 
 export const getAdminPanel = async (req, res) => {
     try {
         await renderAdminPanel(res);
@@ -17,7 +18,7 @@ export const getAdminPanel = async (req, res) => {
         res.status(500).send('Error al cargar el panel de administración.');
     }
 };
-
+//Agrgar un jugador nuevo
 export const addJugador = async (req, res) => {
     try {
         const { nombre, apellido, mote, dorsal, posicion, URL_foto, historico } = req.body;
@@ -42,7 +43,7 @@ export const addJugador = async (req, res) => {
         res.status(500).send('Error al agregar el jugador.');
     }
 };
-
+//Actualizar estadísticas de un jugador
 export const updateEstadisticas = async (req, res) => {
     try {
         const { jugador_id, partidos, goles, asistencias, tarjetas_amarillas, tarjetas_rojas } = req.body;
@@ -66,7 +67,7 @@ export const updateEstadisticas = async (req, res) => {
         res.status(500).send('Error al actualizar las estadísticas.');
     }
 };
-
+//Agregar un partido 
 export const addPartido = async (req, res) => {
     try {
         await renderAdminPanel(res, {
