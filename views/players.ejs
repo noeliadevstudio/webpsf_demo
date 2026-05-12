@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plantilla - PSF</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <script defer src="/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script defer src="/js/gestionFormularios.js"></script>
     <script defer src="/js/votar.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="/">PSF Equipo</a>
             <div class="navbar-nav">
@@ -31,7 +32,10 @@
     </nav>
 
     <div class="container mt-5">
-        <h1 class="mb-4">Plantilla del Equipo</h1>
+        <div class="d-flex align-items-center mb-4">
+            <img src="/img/Escudopsf.png" alt="Escudo PSF" class="logo-small">
+            <h1 class="mb-0">Plantilla del Equipo</h1>
+        </div>
         <div class="row">
             <% jugadores.forEach(jugador => { %>
                 <div class="col-md-4 mb-4">
@@ -51,20 +55,17 @@
                             <% if (jugador.historico) { %>
                                 <p class="card-text"><strong>Histórico:</strong> <%= jugador.historico %></p>
                             <% } %>
-                            <% if (jugador.cant_estrellas != null) { %>
-                                <p class="card-text"><strong>Estrellas:</strong> <%= jugador.cant_estrellas %> </p>
-                            <% } %>
                             <p class="card-text">Partidos: <%= jugador.partidos || 0 %></p>
                             <p class="card-text">Goles: <%= jugador.goles || 0 %></p>
                             <p class="card-text">Asistencias: <%= jugador.asistencias || 0 %></p>
                             <p class="card-text">Tarjetas Amarillas: <%= jugador.tarjetas_amarillas || 0 %></p>
                             <p class="card-text">Tarjetas Rojas: <%= jugador.tarjetas_rojas || 0 %></p>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal<%= jugador.id %>">Ver Detalles</button>
+                            <button class="btn btn-green" data-bs-toggle="modal" data-bs-target="#modal<%= jugador.id %>">Ver Detalles</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Modal -->
+        
                 <div class="modal fade" id="modal<%= jugador.id %>" tabindex="-1" aria-labelledby="modalLabel<%= jugador.id %>" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -92,7 +93,9 @@
                                 <p><strong>Tarjetas Amarillas:</strong> <%= jugador.tarjetas_amarillas || 0 %></p>
                                 <p><strong>Tarjetas Rojas:</strong> <%= jugador.tarjetas_rojas || 0 %></p>
                                 <% if (user) { %>
-                                    <button type="button" class="btn btn-warning votar-btn" data-jugador-id="<%= jugador.id %>">Votar </button>
+                                    <button type="button" class="btn btn-pink votar-btn" data-jugador-id="<%= jugador.id %>">
+                                        <img src="/img/estrellita.png" alt="Estrella" class="star-icon button-icon">Votar
+                                    </button>
                                 <% } else { %>
                                     <p>Inicia sesión para votar.</p>
                                 <% } %>

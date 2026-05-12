@@ -1,0 +1,179 @@
+.navbar { 
+    position: sticky; 
+    background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #f8d7ff 50%,
+        #ffffff 100%
+    );
+    
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    backdrop-filter: blur(6px);
+       top: 0;
+    z-index: 1000;
+   
+}
+
+/* Enlaces del navbar */
+.navbar .nav-link,
+.navbar .navbar-brand {
+    color: #3f3f3f !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Hover */
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover {
+    color: #1f1f1f !important;
+}
+
+.logo-main {
+    max-width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.logo-secondary {
+    max-width: 80px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.logo-small {
+    max-width: 80px;
+    height: auto;
+    margin-right: 15px;
+}
+
+
+.star-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    vertical-align: text-bottom;
+}
+
+.star-icon.button-icon {
+    vertical-align: middle;
+}
+
+.btn-pink,
+.badge-pink {
+    background-color: var(--bs-pink, #d63384);
+    border-color: var(--bs-pink, #d63384);
+    color: #fff;
+}
+
+.btn-pink:hover,
+.badge-pink:hover {
+    background-color: #c2256b;
+    border-color: #c2256b;
+}
+
+.btn-green {
+    background-color:  #31a0d0;
+    border-color:  #31a0d0;
+    color: #fff;
+}
+
+.btn-green:hover {
+    background-color: #2b9aca;
+    border-color: #2b9aca;
+     color: #fff;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper .form-control {
+    padding-right: 3rem;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: inherit;
+    padding: 0.2rem 0.35rem;
+}
+
+.password-toggle:hover,
+.password-toggle:focus {
+    background: transparent !important;
+    color: inherit !important;
+    box-shadow: none !important;
+}
+
+.password-eye {
+    color: #6c757d;
+    margin-top: 35px;
+}
+
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
+.instagram-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.instagram-link {
+    color: #3f3f3f;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.instagram-link:hover {
+    color: #E1306C;
+    transform: scale(1.02);
+}
+
+.calendar th,
+.calendar td {
+    border: 1px solid #dee2e6;
+    padding: 0.6rem;
+    height: 90px;
+    vertical-align: top;
+}
+
+.calendar th {
+    text-align: center;
+    background: #f8f9fa;
+}
+
+.calendar .match-day {
+    background: var(--bs-pink, #d63384);
+    color: #fff;
+    cursor: pointer;
+}
+
+.calendar .match-day:hover {
+    background: #c2256b;
+}
+
+.calendar .today {
+    border: 2px solid var(--bs-pink, #d63384);
+}
+
+.calendar .day-number {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+
+.calendar .match-info {
+    font-size: 0.82rem;
+    line-height: 1.2;
+}
+
+.foto-portada{
+  transform: rotate(-10deg);
+}

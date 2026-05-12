@@ -25,11 +25,13 @@
     };
 
     if (errorExists) {
+        // Si hay un error, intentar rellenar el formulario con los datos guardados
         formRelleno(sessionStorage.getItem(storageKey));
     } else {
+        // Si no hay error, limpiar los datos guardados para evitar rellenar con datos antiguos
         sessionStorage.removeItem(storageKey);
     }
-
+// Guardar datos del formulario en sessionStorage al enviar
     form.addEventListener('submit', () => {
         const values = {};
         inputs.forEach(input => {
@@ -38,23 +40,20 @@
         sessionStorage.setItem(storageKey, JSON.stringify(values));
     });
 
-    // Función para mostrar/ocultar contraseña
-    const passwordInputs = form.querySelectorAll('input[type="password"]'); //esto cambiar por el elemntby
-    passwordInputs.forEach(input => {
-        const toggleButton = document.createElement('button');
-        toggleButton.type = 'button';
-        toggleButton.className = 'btn btn-outline-secondary btn-sm ms-2';
-        toggleButton.innerHTML = 'Ver'; 
-        toggleButton.title = 'Mostrar/ocultar contraseña';
+    // Función para mostrar/ocultar contraseña con iconos
+    const toggleButtons = form.querySelectorAll('.password-toggle');
+    toggleButtons.forEach(button => {
+        const targetSelector = button.dataset.target;
+        const input = targetSelector ? form.querySelector(targetSelector) : button.previousElementSibling;
+        const icon = button.querySelector('i');
+        if (!input || !icon) return;
 
-        toggleButton.addEventListener('click', () => {
+        button.addEventListener('click', () => {
             const isPassword = input.type === 'password';
             input.type = isPassword ? 'text' : 'password';
-            toggleButton.innerHTML = isPassword ? 'Ocultar' : 'Ver';
-            toggleButton.title = isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña';
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+            button.title = isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña';
         });
-
-        // Insertar el botón después del input
-        input.parentNode.insertBefore(toggleButton, input.nextSibling);
     });
 })();

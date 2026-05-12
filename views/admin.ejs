@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin - PSF</title>
+        <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
      <script defer src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="/">PSF Equipo</a>
             <div class="navbar-nav ms-auto">
@@ -124,28 +125,79 @@
                 </div>
             </div>
 
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Actualizar foto de jugador</h4>
+                        <form action="/admin/foto" method="POST">
+                            <div class="mb-3">
+                                <label class="form-label">Jugador</label>
+                                <select class="form-select" name="jugador_id" required>
+                                    <option value="">Selecciona un jugador</option>
+                                    <% jugadores.forEach(jugador => { %>
+                                        <option value="<%= jugador.id %>"><%= jugador.nombre %> <%= jugador.apellido || '' %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">URL de la foto</label>
+                                <input type="url" class="form-control" name="URL_foto" placeholder="https://ruta/foto.jpg" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Actualizar foto</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-12">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h4 class="card-title">Agenda de partidos </h4>
-                        <p class="text-muted">sección PENDIENTE!!</p>
-                        <form action="/admin/partidos" method="POST">
+                        <h4 class="card-title">Agenda de partidos</h4>
+                        <form action="/admin/partidos" method="POST" class="mb-4">
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Fecha del partido</label>
-                                    <input type="date" class="form-control" name="fecha">
+                                    <input type="date" class="form-control" name="fecha" required>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Rival</label>
-                                    <input type="text" class="form-control" name="rival">
+                                    <input type="text" class="form-control" name="rival" required>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-2 mb-3">
                                     <label class="form-label">Resultado</label>
-                                    <input type="text" class="form-control" name="resultado" placeholder="Ej. 2-1">
+                                    <input type="text" class="form-control" name="resultado" placeholder="2-1">
+                                </div>
+                                <div class="col-md-2 mb-3 d-flex align-items-end">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="terminadoNuevo" name="terminado">
+                                        <label class="form-check-label" for="terminadoNuevo">Jugado</label>
+                                    </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-secondary">Guardar partido</button>
                         </form>
+
+                        <h5 class="mt-4">Partidos registrados</h5>
+                        <% if (partidos && partidos.length > 0) { %>
+                            <div class="list-group">
+                                <% partidos.forEach(partido => { %>
+                                    <div class="list-group-item d-flex justify-content-between align-items-start flex-wrap">
+                                        <div class="me-3">
+                                            <div><strong>Fecha:</strong> <%= partido.fecha ? (partido.fecha.toISOString ? partido.fecha.toISOString().slice(0, 10) : partido.fecha) : '' %></div>
+                                            <div><strong>Rival:</strong> <%= partido.rival %></div>
+                                            <div><strong>Jugado:</strong> <%= partido.terminado ? 'Sí' : 'No' %></div>
+                                            <div><strong>Resultado:</strong> <%= partido.resultado || '-' %></div>
+                                        </div>
+                                        <form action="/admin/partidos/borrar" method="POST" class="mb-0">
+                                            <input type="hidden" name="id" value="<%= partido.id %>">
+                                            <button type="submit" class="btn btn-sm btn-danger">Borrar</button>
+                                        </form>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        <% } else { %>
+                            <div class="alert alert-secondary">No hay partidos registrados aún.</div>
+                        <% } %>
                     </div>
                 </div>
             </div>

@@ -30,20 +30,42 @@ const Jugador = {
         );
         return result.insertId;
     },
-    upsertEstadisticas: async ({ jugador_id, partidos, goles, asistencias, tarjetas_amarillas, tarjetas_rojas, cant_estrellas }) => {
-        await db.query(
-            `INSERT INTO estadisticas (jugador_id, partidos, goles, asistencias, tarjetas_amarillas, tarjetas_rojas, cant_estrellas)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-             ON DUPLICATE KEY UPDATE
-                partidos = VALUES(partidos),
-                goles = VALUES(goles),
-                asistencias = VALUES(asistencias),
-                tarjetas_amarillas = VALUES(tarjetas_amarillas),
-                tarjetas_rojas = VALUES(tarjetas_rojas),
-                cant_estrellas = VALUES(cant_estrellas)`,
-            [jugador_id, partidos || 0, goles || 0, asistencias || 0, tarjetas_amarillas || 0, tarjetas_rojas || 0, cant_estrellas || 0]
-        );
-    },
+   upsertEstadisticas: async ({
+    jugador_id,
+    partidos,
+    goles,
+    asistencias,
+    tarjetas_amarillas,
+    tarjetas_rojas,
+    cant_estrellas
+}) => {
+
+    await db.query(
+        `INSERT INTO estadisticas
+        (jugador_id, partidos, goles, asistencias,
+        tarjetas_amarillas, tarjetas_rojas, cant_estrellas)
+
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+
+        ON DUPLICATE KEY UPDATE
+            partidos = partidos + VALUES(partidos),
+            goles = goles + VALUES(goles),
+            asistencias = asistencias + VALUES(asistencias),
+            tarjetas_amarillas = tarjetas_amarillas + VALUES(tarjetas_amarillas),
+            tarjetas_rojas = tarjetas_rojas + VALUES(tarjetas_rojas),
+            cant_estrellas = cant_estrellas + VALUES(cant_estrellas)`,
+
+        [
+            jugador_id,
+            partidos || 0,
+            goles || 0,
+            asistencias || 0,
+            tarjetas_amarillas || 0,
+            tarjetas_rojas || 0,
+            cant_estrellas || 0
+        ]
+    );
+},
     // Función para incrementar cant_estrellas
     incrementarEstrellas: async (id) => {
         const [result] = await db.query(
@@ -56,6 +78,14 @@ const Jugador = {
                 [id]
             );
         }
+    },
+    // Función para actualizar la URL de foto de un jugador
+    updateFoto: async (id, URL_foto) => {
+        const [result] = await db.query(
+            'UPDATE jugadores SET URL_foto = ? WHERE id = ?',
+            [URL_foto || null, id]
+        );
+        return result.affectedRows > 0;
     }
 };
 // Exportar el objeto jugador para que pueda ser utilizado en otras partes de la aplicación

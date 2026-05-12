@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title> <!--Se recogen las variables del index.js -->
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <script defer src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="/">PSF Equipo</a>
+            <a class="navbar-brand" href="/">El P.S.F. Equipo</a>
             <div class="navbar-nav ms-auto">
                 <a class="nav-link active" href="/">Inicio</a>
                 <a class="nav-link" href="/plantilla">Plantilla</a>
@@ -31,9 +33,32 @@
     <div class="container mt-5">
         <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold"> Web del PSF</h1>
-                <p class="col-md-8 fs-4">Información deportiva, ETC.</p>
-                <a href="/plantilla" class="btn btn-primary btn-lg">Ver Plantilla</a>
+                <div class="row align-items-center">
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="/img/Escudopsf.png" alt="Escudo PSF" class="logo-main">
+                            <h1 class="display-5 fw-bold mb-0">EL P.S.F.</h1>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fs-4 mb-0">Equipo de Fútbol de Rivas-Vaciamadrid <img src="/img/Rivas_Vaciamadrid.svg" alt="Escudo Rivas Vaciamadrid" class="logo-secondary"></p>
+                            <div class="d-flex align-items-center mt-3">
+    <a href="https://www.instagram.com/pibesinfronteras.fc?igsh=NXM0dWl0MzNtM3cx" 
+       target="_blank" 
+       class="d-flex align-items-center text-decoration-none instagram-link">
+
+        <img src="/img/instagram.png" 
+             alt="Instagram PSF" 
+             class="instagram-logo">
+
+        <span class="ms-2">@pibesinfronteras.fc</span>
+    </a>
+</div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 text-center">
+                        <img src="/img/fotoportadaweb.png" alt="Foto portada" class="img-fluid foto-portada">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -44,14 +69,78 @@
                     <% ranking.forEach((jugador, index) => { %>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <%= index + 1 %>. <%= jugador.nombre %> <%= jugador.apellido || '' %>
-                            <span class="badge bg-primary rounded-pill"><%= jugador.cant_estrellas %> estrellitas</span>
+                            <span class="badge badge-pink rounded-pill">
+                                <img src="/img/estrellita.png" alt="Estrella" class="star-icon">
+                                <%= jugador.cant_estrellas %>
+                            </span>
                         </li>
                     <% }); %>
                 </ul>
             </div>
             <div class="col-md-6">
-                <h2>Últimas Noticias</h2>
-                <p>Aquí irían las últimas noticias del equipo...</p>
+                <h2>Próximos Partidos</h2>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div><strong><%= new Date().toLocaleString('es-ES', { month: 'long', year: 'numeric' }) %></strong></div>
+                            <div><span class="badge badge-pink"><%= partidos?.length || 0 %> partidos próximos</span></div>
+                        </div>
+                        <table class="calendar">
+                            <thead>
+                                <tr>
+                                    <th>L</th>
+                                    <th>M</th>
+                                    <th>X</th>
+                                    <th>J</th>
+                                    <th>V</th>
+                                    <th>S</th>
+                                    <th>D</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% 
+                                    const now = new Date();
+                                    const year = now.getFullYear();
+                                    const month = now.getMonth();
+                                    const firstDay = new Date(year, month, 1);
+                                    const startWeekDay = (firstDay.getDay() + 6) % 7;
+                                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+                                    const matchMap = {};
+                                    (partidos || []).forEach(partido => {
+                                        if (!partido.fecha) return;
+                                        const fechaPartido = new Date(partido.fecha);
+                                        if (fechaPartido.getFullYear() === year && fechaPartido.getMonth() === month) {
+                                            const day = fechaPartido.getDate();
+                                            if (!matchMap[day]) matchMap[day] = [];
+                                            matchMap[day].push(partido);
+                                        }
+                                    });
+                                    const totalCells = Math.ceil((startWeekDay + daysInMonth) / 7) * 7;
+                                    let dayCount = 1;
+                                %>
+                                <% for (let cell = 0; cell < totalCells; cell++) { %>
+                                    <% if (cell % 7 === 0) { %><tr><% } %>
+
+                                    <% if (cell < startWeekDay || dayCount > daysInMonth) { %>
+                                        <td></td>
+                                    <% } else { %>
+                                        <% const matches = matchMap[dayCount] || []; %>
+                                        <% const isToday = dayCount === now.getDate(); %>
+                                        <td class="<%= matches.length ? 'match-day' : '' %> <%= isToday ? 'today' : '' %>" title="<%= matches.length ? matches.map(m => 'PSF vs ' + m.rival).join('; ') : '' %>">
+                                            <span class="day-number"><%= dayCount %></span>
+                                            <% if (matches.length) { %>
+                                                <span class="match-info"><%= matches.length === 1 ? 'PSF vs ' + matches[0].rival : matches.length + ' partidos' %></span>
+                                            <% } %>
+                                        </td>
+                                        <% dayCount++; %>
+                                    <% } %>
+
+                                    <% if (cell % 7 === 6) { %></tr><% } %>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
