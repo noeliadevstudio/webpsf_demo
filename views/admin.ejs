@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin - PSF</title>
-        <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="/css/styles.css">
      <script defer src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
@@ -21,6 +21,7 @@
             </div>
         </div>
     </nav>
+    <main>
 
     <div class="container mt-5">
         <% if (!user || user.rol !== 'admin') { %>
@@ -68,14 +69,6 @@
                             <div class="mb-3">
                                 <label class="form-label">URL de la foto</label>
                                 <input type="url" class="form-control" name="URL_foto">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Histórico</label>
-                                <textarea class="form-control" name="historico" rows="2"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Estrellas</label>
-                                <input type="number" class="form-control" name="cant_estrellas" min="0" max="5">
                             </div>
                             <button type="submit" class="btn btn-primary">Agregar jugador</button>
                         </form>
@@ -205,6 +198,14 @@
         <% } %>
     </div>
 
-   
+   </main>
+
+<footer class="footer-psf">
+    <div class="container text-center">
+        <p class="mb-0">
+            © 2026 PSF — Proyecto Intermodular · IES Virgen de la Paloma
+        </p>
+    </div>
+</footer>
 </body>
 </html>

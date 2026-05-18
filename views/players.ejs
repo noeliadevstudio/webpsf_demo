@@ -30,7 +30,7 @@
             </div>
         </div>
     </nav>
-
+<main>
     <div class="container mt-5">
         <div class="d-flex align-items-center mb-4">
             <img src="/img/Escudopsf.png" alt="Escudo PSF" class="logo-small">
@@ -96,6 +96,7 @@
                                     <button type="button" class="btn btn-pink votar-btn" data-jugador-id="<%= jugador.id %>">
                                         <img src="/img/estrellita.png" alt="Estrella" class="star-icon button-icon">Votar
                                     </button>
+                                     <div class="mensaje-voto mt-3"></div>
                                 <% } else { %>
                                     <p>Inicia sesión para votar.</p>
                                 <% } %>
@@ -107,6 +108,14 @@
         </div>
     </div>
 
- 
+ </main>
+
+<footer class="footer-psf">
+    <div class="container text-center">
+        <p class="mb-0">
+            © 2026 PSF — Proyecto Intermodular · IES Virgen de la Paloma
+        </p>
+    </div>
+</footer>
 </body>
 </html>

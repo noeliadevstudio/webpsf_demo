@@ -22,11 +22,11 @@ const Jugador = {
         const [rows] = await db.query('SELECT * FROM jugadores WHERE id = ?', [id]);
         return rows[0];
     },
-    create: async ({ nombre, apellido, mote, dorsal, posicion, URL_foto, historico }) => {
+    create: async ({ nombre, apellido, mote, dorsal, posicion, URL_foto }) => {
         const [result] = await db.query(
-            `INSERT INTO jugadores (nombre, apellido, mote, dorsal, posicion, URL_foto, historico)
-             VALUES (?, ?, ?, ?, ?, ?, ?)`,
-            [nombre, apellido || null, mote || null, dorsal || null, posicion || null, URL_foto || null, historico || null]
+            `INSERT INTO jugadores (nombre, apellido, mote, dorsal, posicion, URL_foto)
+             VALUES (?, ?, ?, ?, ?, ?)`,
+            [nombre, apellido || null, mote || null, dorsal || null, posicion || null, URL_foto || null]
         );
         return result.insertId;
     },

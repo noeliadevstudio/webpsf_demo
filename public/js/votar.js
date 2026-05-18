@@ -1,4 +1,12 @@
 //Manejo de votación de jugadores: 
+// Mostrar mensajes en interfaz
+function mostrarMensaje(contenedor, mensaje, tipo = 'danger') {
+    contenedor.innerHTML = `
+        <div class="alert alert-${tipo}" role="alert">
+            ${mensaje}
+        </div>
+    `;
+}
 //escuchar DOM: 
 document.addEventListener('DOMContentLoaded', function() {
     // Agregar evento click a cada botón de votar
@@ -6,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Obtener id del jugador html 
         btn.addEventListener('click', async function(e) {
              e.preventDefault();
+             const contenedorMensaje = this.parentElement.querySelector('.mensaje-voto');
+    contenedorMensaje.innerHTML = '';
+
             let jugadorId = this.getAttribute('data-jugador-id');
             jugadorId = parseInt(jugadorId, 10);
             try {
@@ -26,19 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     data = JSON.parse(text);
                 } catch (parseError) {
                     console.error('No se pudo parsear JSON:', parseError, text);
-                    alert('Error al votar: respuesta inválida del servidor.');
+                    mostrarMensaje(contenedorMensaje, 'Error al votar: respuesta inválida del servidor.');
                     return;
                 }
                 if (data.success) {
                     //QUITAR ALERTS!! QUE SALGAN EN LA PAGINA, NO EN VENTANAS EMERGENTES
-                    alert('¡Voto registrado!');
-                    location.reload(); // Recargar para actualizar estrellas
+                    mostrarMensaje(contenedorMensaje, '¡Voto registrado!', 'success');
+                
                 } else {
-                    alert(data.error || 'Error al votar.');
+                   mostrarMensaje(contenedorMensaje, data.error || 'Error al votar.');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Error al votar.');
+                mostrarMensaje(contenedorMensaje, 'Error al votar.');
             }
         });
     });

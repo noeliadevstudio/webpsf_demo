@@ -1,3 +1,19 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenido principal */
+main {
+    flex: 1;
+}
+
 .navbar { 
     position: sticky; 
     background: linear-gradient(
@@ -177,3 +193,27 @@
 .foto-portada{
   transform: rotate(-10deg);
 }
+
+.footer-psf {
+    background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #f8d7ff 50%,
+        #ffffff 100%
+    );
+
+    padding: 18px 0;
+    margin-top: 60px;
+
+    
+
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+}
+
+.footer-psf p {
+    color: #4a4a4a;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
